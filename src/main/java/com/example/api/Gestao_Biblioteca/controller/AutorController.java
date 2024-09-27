@@ -1,5 +1,6 @@
 package com.example.api.Gestao_Biblioteca.controller;
 
+import com.example.api.Gestao_Biblioteca.dto.AtualizarAutorDto;
 import com.example.api.Gestao_Biblioteca.dto.CriarAutorDto;
 import com.example.api.Gestao_Biblioteca.model.AutorModel;
 import com.example.api.Gestao_Biblioteca.service.AutorService;
@@ -34,5 +35,17 @@ public class AutorController {
     @GetMapping("/{id}")
     public ResponseEntity<AutorModel> listarUmAutor(@PathVariable("id") UUID id){
       return ResponseEntity.status(HttpStatus.OK).body(autorService.listarUmAutor(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AutorModel> atualizar(@PathVariable("id") UUID id, @RequestBody @Valid AtualizarAutorDto autorDto) {
+        var autor = autorService.atualizar(id, autorDto);
+        return ResponseEntity.status(HttpStatus.OK).body(autor);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<AutorModel> atualizarParcialmente(@PathVariable("id") UUID id,  @RequestBody  AtualizarAutorDto autorDto) {
+        var autor = autorService.atualizarParcialmente(id, autorDto);
+        return ResponseEntity.status(HttpStatus.OK).body(autor);
     }
 }
