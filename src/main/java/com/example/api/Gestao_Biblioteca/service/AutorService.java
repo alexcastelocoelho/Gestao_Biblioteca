@@ -8,6 +8,8 @@ import com.example.api.Gestao_Biblioteca.repository.AutorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -76,4 +78,12 @@ public class AutorService {
         }
     }
 
+
+    public void deletarAutor(UUID id) {
+        var autor = autorRepository.findById(id);
+        if (autor.isEmpty()) {
+            throw new AutorNaoLocalizado("Autor não localizado");
+        }
+        autorRepository.delete(autor.get());
+    }
 }

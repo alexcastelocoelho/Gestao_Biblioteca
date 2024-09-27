@@ -48,4 +48,10 @@ public class AutorController {
         var autor = autorService.atualizarParcialmente(id, autorDto);
         return ResponseEntity.status(HttpStatus.OK).body(autor);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletarAutor(@PathVariable("id") UUID id) {
+        autorService.deletarAutor(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Autor deletado com sucesso ");
+    }
 }
