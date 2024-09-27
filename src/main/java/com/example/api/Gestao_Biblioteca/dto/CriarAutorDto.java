@@ -1,6 +1,7 @@
 package com.example.api.Gestao_Biblioteca.dto;
 
 import com.example.api.Gestao_Biblioteca.utils.CpfInvalido;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class CriarAutorDto {
     String cpf;
 
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
     LocalDate dataNascimento;
 
     @NotBlank

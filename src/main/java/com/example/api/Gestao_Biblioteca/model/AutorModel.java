@@ -1,6 +1,7 @@
 package com.example.api.Gestao_Biblioteca.model;
 
 import com.example.api.Gestao_Biblioteca.utils.CpfSerialize;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
@@ -26,6 +27,7 @@ public class AutorModel {
     private String cpf;
 
     @Column(nullable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
     @Column(nullable = false)
