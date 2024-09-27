@@ -1,6 +1,7 @@
 package com.example.api.Gestao_Biblioteca.service;
 
 import com.example.api.Gestao_Biblioteca.dto.CriarAutorDto;
+import com.example.api.Gestao_Biblioteca.exception.AutorNaoLocalizado;
 import com.example.api.Gestao_Biblioteca.model.AutorModel;
 import com.example.api.Gestao_Biblioteca.repository.AutorRepository;
 import org.springframework.beans.BeanUtils;
@@ -35,7 +36,7 @@ public class AutorService {
     public AutorModel listarUmAutor(UUID id) {
         var autor = autorRepository.findById(id);
         if (autor.isEmpty()) {
-            return null;
+            throw new AutorNaoLocalizado("Autor não localizado");
         }
         return autor.get();
 
