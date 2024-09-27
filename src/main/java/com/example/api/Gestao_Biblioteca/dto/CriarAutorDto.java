@@ -1,5 +1,6 @@
 package com.example.api.Gestao_Biblioteca.dto;
 
+import com.example.api.Gestao_Biblioteca.utils.CpfInvalido;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class CriarAutorDto {
     Integer idade;
 
     @NotBlank
+    @CpfInvalido
     String cpf;
 
     @NotNull
