@@ -6,6 +6,8 @@ import com.example.api.Gestao_Biblioteca.repository.AutorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AutorService {
@@ -23,6 +25,19 @@ public class AutorService {
         BeanUtils.copyProperties(autorDto, autorModel);
         autorRepository.save(autorModel);
         return autorModel;
+
+    }
+
+    public List<AutorModel> listarAutores() {
+        return autorRepository.findAll();
+    }
+
+    public AutorModel listarUmAutor(UUID id) {
+        var autor = autorRepository.findById(id);
+        if (autor.isEmpty()) {
+            return null;
+        }
+        return autor.get();
 
     }
 }
