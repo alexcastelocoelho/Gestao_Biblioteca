@@ -2,13 +2,11 @@ package com.example.api.Gestao_Biblioteca.service;
 
 import com.example.api.Gestao_Biblioteca.dto.AtualizarAutorDto;
 import com.example.api.Gestao_Biblioteca.dto.CriarAutorDto;
-import com.example.api.Gestao_Biblioteca.exception.AutorNaoLocalizado;
+import com.example.api.Gestao_Biblioteca.exception.RecursoNaoLocalizado;
 import com.example.api.Gestao_Biblioteca.model.AutorModel;
 import com.example.api.Gestao_Biblioteca.repository.AutorRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +37,7 @@ public class AutorService {
     public AutorModel listarUmAutor(UUID id) {
         var autor = autorRepository.findById(id);
         if (autor.isEmpty()) {
-            throw new AutorNaoLocalizado("Autor não localizado");
+            throw new RecursoNaoLocalizado("Autor não localizado");
         }
         return autor.get();
 
@@ -53,7 +51,7 @@ public class AutorService {
             autorRepository.save(autorModel);
             return autorModel;
         } else
-            throw new AutorNaoLocalizado("Autor não localizado para atualização, verifiquei");
+            throw new RecursoNaoLocalizado("Autor não localizado para atualização, verifiquei");
     }
 
     public AutorModel atualizarParcialmente(UUID id, AtualizarAutorDto autorDto) {
@@ -74,7 +72,7 @@ public class AutorService {
 
             return autorRepository.save(autorModel);
         } else {
-            throw new AutorNaoLocalizado("Autor não localizado para atualização parcial, verifique novamente");
+            throw new RecursoNaoLocalizado("Autor não localizado para atualização parcial, verifique novamente");
         }
     }
 
@@ -82,7 +80,7 @@ public class AutorService {
     public void deletarAutor(UUID id) {
         var autor = autorRepository.findById(id);
         if (autor.isEmpty()) {
-            throw new AutorNaoLocalizado("Autor não localizado");
+            throw new RecursoNaoLocalizado("Autor não localizado");
         }
         autorRepository.delete(autor.get());
     }

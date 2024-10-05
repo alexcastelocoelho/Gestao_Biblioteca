@@ -10,8 +10,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(AutorNaoLocalizado.class)
-    public ResponseEntity<String> autorNaoLocalizado(AutorNaoLocalizado exception) {
+    @ExceptionHandler(RecursoNaoLocalizado.class)
+    public ResponseEntity<String> autorNaoLocalizado(RecursoNaoLocalizado exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 
