@@ -25,6 +25,9 @@ public class UsuarioService {
     public UsuarioModel criarUsuario(CriarUsuarioDto criarUsuario) {
         UsuarioModel usuarioModel = new UsuarioModel();
 
+        if(usuarioRepository.existsByEmail(criarUsuario.getEmail())) {
+            throw new BadRequest("Email predisa ser unico");
+        }
 
         BeanUtils.copyProperties(criarUsuario, usuarioModel);
         usuarioRepository.save(usuarioModel);
