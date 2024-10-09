@@ -1,5 +1,6 @@
 package com.example.api.Gestao_Biblioteca.dto;
 
+import com.example.api.Gestao_Biblioteca.model.AutorModel;
 import com.example.api.Gestao_Biblioteca.utils.enums.Genero;
 import jakarta.validation.constraints.*;
 
@@ -18,6 +19,9 @@ public class CriarLivroDto {
     @NotBlank
     @Size(min = 15, max = 200, message = "Faça um breve resumo sobre o livro")
     private String resumo;
+
+    @NotNull
+    private AutorModel autor;
 
     public String getTitulo() {
         return titulo;
@@ -49,5 +53,13 @@ public class CriarLivroDto {
 
     public void setResumo(String resumo) {
         this.resumo = resumo;
+    }
+
+    public AutorModel getAutor() {
+        return autor;
+    }
+
+    public void setAutor(AutorModel autor) {
+        this.autor = autor;
     }
 }

@@ -1,11 +1,13 @@
 package com.example.api.Gestao_Biblioteca.model;
 
 import com.example.api.Gestao_Biblioteca.utils.CpfSerialize;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -32,6 +34,9 @@ public class AutorModel {
 
     @Column(nullable = false)
     private String biografia;
+
+    @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY)
+    private Set<LivroModel> livros = new HashSet<>();
 
     public AutorModel() {
     }
@@ -91,5 +96,13 @@ public class AutorModel {
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
+    }
+
+    public Set<LivroModel> getLivros() {
+        return livros;
+    }
+
+    public void setLivros(Set<LivroModel> livros) {
+        this.livros = livros;
     }
 }

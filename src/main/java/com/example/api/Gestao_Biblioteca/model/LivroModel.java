@@ -1,7 +1,9 @@
 package com.example.api.Gestao_Biblioteca.model;
 
 import com.example.api.Gestao_Biblioteca.utils.enums.Genero;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.UUID;
 
@@ -26,6 +28,10 @@ public class LivroModel {
     @Column(nullable = false)
     private String resumo;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    private AutorModel autor;
 
     public LivroModel() {
     }
@@ -76,5 +82,13 @@ public class LivroModel {
 
     public void setResumo(String resumo) {
         this.resumo = resumo;
+    }
+
+    public AutorModel getAutor() {
+        return autor;
+    }
+
+    public void setAutor(AutorModel autor) {
+        this.autor = autor;
     }
 }

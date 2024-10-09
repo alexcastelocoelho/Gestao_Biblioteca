@@ -1,10 +1,13 @@
 package com.example.api.Gestao_Biblioteca.dto;
 
+import com.example.api.Gestao_Biblioteca.model.LivroModel;
 import com.example.api.Gestao_Biblioteca.utils.CpfInvalido;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CriarAutorDto {
 
@@ -28,6 +31,9 @@ public class CriarAutorDto {
     @NotBlank
     @Size(min = 15, message = "Biografia precisa ter pelo menos 15 caracteres")
     String biografia;
+
+    @NotNull
+    private Set<LivroModel> livros = new HashSet<>();
 
     public String getNome() {
         return nome;
@@ -67,5 +73,13 @@ public class CriarAutorDto {
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
+    }
+
+    public Set<LivroModel> getLivros() {
+        return livros;
+    }
+
+    public void setLivros(Set<LivroModel> livros) {
+        this.livros = livros;
     }
 }
