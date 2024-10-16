@@ -1,8 +1,12 @@
 package com.example.api.Gestao_Biblioteca.dto;
 
 import com.example.api.Gestao_Biblioteca.model.AutorModel;
+import com.example.api.Gestao_Biblioteca.model.EmprestimoModel;
 import com.example.api.Gestao_Biblioteca.utils.enums.Genero;
 import jakarta.validation.constraints.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class CriarLivroDto {
 
@@ -22,6 +26,8 @@ public class CriarLivroDto {
 
     @NotNull
     private AutorModel autor;
+
+    private Set<EmprestimoModel> emprestimos = new HashSet<>();
 
     public String getTitulo() {
         return titulo;
@@ -61,5 +67,13 @@ public class CriarLivroDto {
 
     public void setAutor(AutorModel autor) {
         this.autor = autor;
+    }
+
+    public Set<EmprestimoModel> getEmprestimos() {
+        return emprestimos;
+    }
+
+    public void setEmprestimos(Set<EmprestimoModel> emprestimos) {
+        this.emprestimos = emprestimos;
     }
 }
