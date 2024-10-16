@@ -2,6 +2,8 @@ package com.example.api.Gestao_Biblioteca.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +22,9 @@ public class UsuarioModel {
 
     @Column(nullable = false)
     private String senha;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<EmprestimoModel> emprestimos = new HashSet<>();
 
     public UsuarioModel() {
     }
@@ -61,5 +66,13 @@ public class UsuarioModel {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Set<EmprestimoModel> getEmprestimos() {
+        return emprestimos;
+    }
+
+    public void setEmprestimos(Set<EmprestimoModel> emprestimos) {
+        this.emprestimos = emprestimos;
     }
 }

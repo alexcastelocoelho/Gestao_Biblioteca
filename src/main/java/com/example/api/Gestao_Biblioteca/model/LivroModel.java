@@ -1,10 +1,14 @@
 package com.example.api.Gestao_Biblioteca.model;
 
 import com.example.api.Gestao_Biblioteca.utils.enums.Genero;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -32,6 +36,9 @@ public class LivroModel {
     @ManyToOne
     @JoinColumn(name = "autor_id")
     private AutorModel autor;
+
+    @OneToMany(mappedBy = "livro", fetch = FetchType.LAZY)
+    private Set<EmprestimoModel> emprestimos = new HashSet<>();
 
     public LivroModel() {
     }
@@ -90,5 +97,13 @@ public class LivroModel {
 
     public void setAutor(AutorModel autor) {
         this.autor = autor;
+    }
+
+    public Set<EmprestimoModel> getEmprestimos() {
+        return emprestimos;
+    }
+
+    public void setEmprestimos(Set<EmprestimoModel> emprestimos) {
+        this.emprestimos = emprestimos;
     }
 }
