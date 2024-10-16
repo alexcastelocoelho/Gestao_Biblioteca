@@ -1,6 +1,7 @@
 package com.example.api.Gestao_Biblioteca.model;
 
 import com.example.api.Gestao_Biblioteca.utils.enums.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
@@ -25,8 +26,12 @@ public class EmprestimoModel {
     @JoinColumn(name = "usuario_id")
     private UsuarioModel usuario;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(nullable = false)
     private LocalDate dataEmprestimo;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(nullable = false)
     private LocalDate dataDevolucao;
 
     @Column(nullable = false)
