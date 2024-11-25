@@ -11,7 +11,7 @@ import java.util.Set;
 public class CriarLivroDto {
 
     @NotBlank
-    @Size(min = 3, max = 15, message = "titulo precisa ter pelo menos 3 caracteres")
+    @Size(min = 3, max = 50, message = "titulo precisa ter pelo menos 3 caracteres")
     private String titulo;
 
     @NotNull(message = "Por favor, informe o ano de publicação do livro")

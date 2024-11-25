@@ -8,7 +8,7 @@ public record AtualizarAutorDto(
 
 
     @NotBlank
-    @Size(min = 3, max = 15, message = "nome precisa ter pelo menos 3 caracteres")
+    @Size(min = 3, max = 50, message = "nome precisa ter pelo menos 3 caracteres")
     String nome,
 
     @NotNull
