@@ -2,6 +2,7 @@ package com.example.api.Gestao_Biblioteca.service;
 
 import com.example.api.Gestao_Biblioteca.dto.AtualizarAutorDto;
 import com.example.api.Gestao_Biblioteca.dto.CriarAutorDto;
+import com.example.api.Gestao_Biblioteca.exception.CpfInvalidoException;
 import com.example.api.Gestao_Biblioteca.exception.RecursoNaoLocalizado;
 import com.example.api.Gestao_Biblioteca.model.AutorModel;
 import com.example.api.Gestao_Biblioteca.repository.AutorRepository;
@@ -23,6 +24,10 @@ public class AutorService {
 
     public AutorModel CriarAutor(CriarAutorDto autorDto) {
         AutorModel autorModel = new AutorModel();
+        var cpfexiste = autorRepository.findByCpf(autorDto.getCpf());
+        if (cpfexiste.isPresent()) {
+            throw new CpfInvalidoException("cpf já registrado na base de dados");
+        }
 
         BeanUtils.copyProperties(autorDto, autorModel);
         autorRepository.save(autorModel);
