@@ -1,7 +1,9 @@
 package com.example.api.Gestao_Biblioteca.exception;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -36,6 +38,35 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> methodArgumentNotValidException(MethodArgumentNotValidException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getBindingResult().getFieldError().getDefaultMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> httpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        String erromessage = ex.getMessage();
+        String erroMessagemPadrao = "valor invalido para campo" + erromessage;
+
+         if (ex.getCause() instanceof JsonMappingException jsonMappingException){
+            JsonMappingException.Reference reference = jsonMappingException.getPath().get(0);
+
+            if (erromessage != null && erromessage.contains("Failed to deserialize java.time.LocalDate")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Valor ou formato errado no campo " + reference.getFieldName());
+            }
+            else if (erromessage != null && erromessage.contains("Cannot deserialize value of type `java.lang.Integer")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Valor ou formato errado no campo " + reference.getFieldName());
+            } else {
+            String enumValores = pegaValoresAceitosEnum(jsonMappingException);
+
+            String campo = reference.getFieldName();
+            erroMessagemPadrao = "Valor invalido para campo: " + campo + " -- Os valores aceitos são " + enumValores;
+            }
+        }
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroMessagemPadrao);
+    }
+
+    private String pegaValoresAceitosEnum(JsonMappingException mappingException) {
+        String message = mappingException.getMessage();
+
+        return message.substring(message.indexOf("[") + 1, message.indexOf("]"));
     }
 
 }
