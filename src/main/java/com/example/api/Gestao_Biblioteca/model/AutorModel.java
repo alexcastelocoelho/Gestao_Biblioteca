@@ -36,6 +36,7 @@ public class AutorModel {
     private String biografia;
 
     @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"emprestimos"})
     private Set<LivroModel> livros = new HashSet<>();
 
     public AutorModel() {
