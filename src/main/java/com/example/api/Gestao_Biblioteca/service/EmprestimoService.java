@@ -28,6 +28,10 @@ public class EmprestimoService {
     public EmprestimoModel CriarEmprestimo(CriarEmprestimoDto emprestimoDto) {
         EmprestimoModel emprestimoModel = new EmprestimoModel();
 
+        if(emprestimoDto.getDataDevolucao().isBefore(emprestimoDto.getDataEmprestimo())){
+            throw new BadRequest("Data devolução precisa ser posteriuor a data emprestimo");
+        }
+
         BeanUtils.copyProperties(emprestimoDto, emprestimoModel);
         emprestimoRepository.save(emprestimoModel);
         return emprestimoModel;
