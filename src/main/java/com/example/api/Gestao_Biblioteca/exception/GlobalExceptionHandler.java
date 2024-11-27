@@ -1,13 +1,18 @@
 package com.example.api.Gestao_Biblioteca.exception;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import java.time.ZonedDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,8 +28,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(CpfInvalidoException.class)
-    public ResponseEntity<String> cpfInvalido(CpfInvalidoException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    public ResponseEntity<ApiErrorResponse> cpfInvalido(CpfInvalidoException ex, HttpServletRequest request, HandlerMethod method ) {
+        ApiErrorResponse resposta = new ApiErrorResponse( HttpStatus.CONFLICT,ex.getMessage(),request.getRequestURI(),method.getMethod().getName(),ZonedDateTime.now());
+        return new ResponseEntity<>(resposta, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
