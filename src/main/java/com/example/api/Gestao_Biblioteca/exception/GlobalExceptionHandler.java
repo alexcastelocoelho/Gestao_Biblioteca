@@ -18,8 +18,10 @@ import java.time.ZonedDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RecursoNaoLocalizado.class)
-    public ResponseEntity<String> autorNaoLocalizado(RecursoNaoLocalizado exception) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<ApiErrorResponse> recursoNaoLocalizado(RecursoNaoLocalizado ex, HttpServletRequest request, HandlerMethod method ) {
+        ApiErrorResponse resposta = new ApiErrorResponse( HttpStatus.NOT_FOUND,ex.getMessage(),request.getRequestURI(),method.getMethod().getName(),ZonedDateTime.now());
+        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+        return new ResponseEntity<>(resposta, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadRequest.class)
