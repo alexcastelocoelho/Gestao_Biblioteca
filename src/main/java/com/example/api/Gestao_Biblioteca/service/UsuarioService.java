@@ -3,6 +3,7 @@ package com.example.api.Gestao_Biblioteca.service;
 import com.example.api.Gestao_Biblioteca.dto.AtualizarUsuarioDto;
 import com.example.api.Gestao_Biblioteca.dto.CriarUsuarioDto;
 import com.example.api.Gestao_Biblioteca.exception.BadRequest;
+import com.example.api.Gestao_Biblioteca.exception.EmailInvalidoException;
 import com.example.api.Gestao_Biblioteca.exception.RecursoNaoLocalizado;
 import com.example.api.Gestao_Biblioteca.model.UsuarioModel;
 import com.example.api.Gestao_Biblioteca.repository.UsuarioRepository;
@@ -26,7 +27,7 @@ public class UsuarioService {
         UsuarioModel usuarioModel = new UsuarioModel();
 
         if(usuarioRepository.existsByEmail(criarUsuario.getEmail())) {
-            throw new BadRequest("Email predisa ser unico");
+            throw new EmailInvalidoException("Email já registrado na base de dados");
         }
 
         BeanUtils.copyProperties(criarUsuario, usuarioModel);

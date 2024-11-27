@@ -33,6 +33,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(resposta, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(EmailInvalidoException.class)
+    public ResponseEntity<ApiErrorResponse> emailInvalido(EmailInvalidoException ex, HttpServletRequest request, HandlerMethod method ) {
+        ApiErrorResponse resposta = new ApiErrorResponse( HttpStatus.CONFLICT,ex.getMessage(),request.getRequestURI(),method.getMethod().getName(),ZonedDateTime.now());
+        return new ResponseEntity<>(resposta, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<String> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
         if (exception.getMessage() != null && exception.getMessage().contains("UUID string too large")) {
